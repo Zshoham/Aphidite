@@ -19,15 +19,25 @@
 \maketitle
 
 \section*{General Problem Description}
-Description goes here...
+Aphids are among the most destructive insect pests, and monitoring aphid populations provides important data related to integrated pest management. Inefficient and labor-intensive is the manual identification of aphids. In order to reduce aphid crop damage, recent advances in computer vision algorithms - including object detection - can improve the process of identifying, classifying, and monitoring aphids.
 
 \section*{Required Implementation}
-Implementation stuff goes here...
+For the purpose of identifying the aphids, we will use YOLO/RCNN with preprocessing (fracturing the images and choosing the most likely fragments based on the percentage of green pixels). Our work on improving the baseline results includes adding our own modifications (for example, adding more contrast to the colors in the image) to further enhance the results. We will then evaluate our modified algorithms based on the chosen evaluation metrics (described in the following section). We will simplify the problem by converting it to binary: 1 for aphids and 0 for no aphids.
 
 \section*{General Description of Experiments}
-Experiments go here...
+\begin{enumerate}
+  \item Dataset preprocessing:
+  \begin{enumerate}
+    \item <fill here when the data will be published> 
+  \end{enumerate}
+  \item Randomly split the dataset into train and test sets, 80-20 percent respectively.
+  \item Tune hyperparameter using K-Fold cross validation.
+  \item Train each algorithm on the training set, as paying attention to overfitting.
+  \item Evaluate each model on the test set using appropriate metrics, like F1 and ROC AUC.
+  \item Compare performance results.
+\end{enumerate}
 
 \section*{General Description of User Study}
-User study goes here...
+Providing users with <x> display options for the results of the aphid detection:
 
 \end{document}
