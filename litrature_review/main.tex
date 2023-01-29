@@ -16,31 +16,359 @@
 \usepackage{graphicx}
 \usepackage{subfiles}
 
-\title{Aphid Detection in Lettuce and Cannabis Leaves \\ Litrature Review}
+\title{Aphid Detection in Lettuce and Cannabis Leaves \\ Litrature Reiview}
 
 \subfile{../authors}
 
 \begin{document}
 \maketitle
 
-\section{Background}
-General background information...
+\section*{Background}
+Aphids are a major problem for farmers because they reproduce in days (Chen at al. 2018)
+and can infest large fields, causing significant damage to crops. 
+This has led to a lot of money being spent on controlling and protecting against 
+these pests \cite{CoarseToFine}.
 
-\subsection{Background on topic A}
-Background information on topic A...
 
-\subsection{Background on topic B}
-Background information on topic B...
+Pest management often involves the use of insecticides, 
+which can have adverse effects on crops and the environment. 
+However, early detection of infected plants can help reduce the amount of insecticide needed and prevent yield loss. 
+Manual techniques for detecting pests require expertise, making them inefficient and 
+unreliable \cite{DetectionInWeatFields}. In recent years, digital image analysis and computer vision algorithms 
+have been developed to assist with pest detection. By providing images, 
+these algorithms can identify the presence of pests and help farmers make more informed decisions 
+\cite{DetectionInWeatFields}. These techniques can be more efficient and accurate than manual methods \cite{DetectionInWeatFields}.
 
-\section{Related Work}
-General related work information...
 
-\subsection{Related work on topic A}
-Related work on topic A...
+Recent advances in object detection have been driven by the success of region proposal methods and 
+region-based convolutional neural networks (R-CNNs). 
+R-CNN \cite{FasterRCNN}, is a type of object detection algorithm that uses a selective 
+search algorithm to generate region proposals, which are candidate regions within an image that 
+may contain objects of interest. R-CNN then uses a convolutional neural network (CNN) 
+to extract features from the region proposals and an SVM to classify the presence of an 
+object within each proposal. Fast R-CNN \cite{FasterRCNN}, 
+is a variation of R-CNN that uses a region proposal network (RPN) to generate region proposals, 
+making the algorithm faster and more efficient. RPN is a type of neural network used to generate candidate regions, 
+or "proposals" within an input image that may contain objects of interest. 
+Fast R-CNN is able to run at around 5-10 frames per second, depending on the size of the image 
+and the number of region proposals. While it is faster than R-CNN, it may still be too slow for some 
+real-time applications. Faster R-CNN \cite{FasterRCNN}, 
+further improves upon Fast R-CNN by combining the region proposal network and the CNN into a single network. 
+Faster R-CNN can run at around 7-10 frames per second, depending on the size of the image and 
+the number of region proposals. YOLO (You Only Look Once) \cite{YOLO}, 
+is a type of object detection algorithm that is faster and more efficient than many other algorithms. 
+However, it needs to catch up to state-of-the-art detection systems in terms of accuracy. 
+While it can quickly identify objects in images, it needs help to localize small objects precisely. 
+Despite this limitation, YOLO has been widely adopted in computer vision for its ability to detect 
+objects in images and videos efficiently.
 
-\subsection{Related work on topic B}
-Related work on topic B...
 
+Our work will build upon the work done in image detection and aphid detection, 
+we will use the Faster-RCNN model with the addition of domain-specific pre-processing 
+like removing images which have less than k\% green pixels, where k is a hyper-parameter.
+
+\newpage
+\section*{Related Work}
+There are many challenges in automatically detecting aphids. 
+Here, we review some methods and specific problem formulations for aphid detection. 
+These methods will try to frame aphid detection differently and define different tasks. 
+These methods all try to solve similar problems with aphid detection, 
+like the inability of object detection models to detect very small objects in dense clusters.
+
+
+Ruili et al. propose a new multi-branch convolutional neural network (Mb-CNN) 
+to improve accuracy in these challenging environments. Mb-CNN gives better results in counting aphids, 
+and it was developed with a density map for aphids in densely distributed regions and overlapped areas. 
+The main idea of this method is to use a multi-branch CNN framework to generate the density map of 
+aphids to estimate their number. The relevance of that method to our research is detecting aphids. 
+The sole purpose of the article is to improve number counting. 
+It's less relevant to our study because we want to focus on detecting Aphids.
+
+
+Jianming Du er al. \cite{DenseTinyPest} presents a new problem called densely clustered tiny (DCT) object detection, 
+which involves detecting small objects that are densely distributed in small areas. 
+The authors argue that existing methods for detecting clustered small objects are not suitable 
+for this task and therefore propose a new approach called DCTDet, 
+which consists of three core components. The authors evaluate their approach using a specific 
+in-field aphid dataset and show that it outperforms existing methods for clustered small 
+object detection. The paper's relevance depends on the data set we will use and how aphids are 
+localized in it.
+
+
+Liu et al. (2015) \cite{DetectionInWeatFields} reviews existing techniques for aphid detection, 
+such as unsupervised cluster algorithms and image segmentation, 
+and proposes a new approach using maximally stable external regions (MSER) based on support 
+vector machine and histogram of oriented gradient (HOG) methods. 
+Our research is similar in that it uses MSER and HOG in the preprocessing phase, 
+but it differs in using the Faster RCNN algorithm for aphid detection.
+
+
+Rui et al \cite{CoarseToFine} propose a noval method that relays on the distribution of aphids in an image. 
+The authors note densely distributed aphids may be harder to detect than well-separated aphids. 
+The method suggests localizing the regions of aphid cliques containing a large number of 
+aphids and then refining them into single objects. This method is called 
+Coarse-to-Fine Network (CFN) and can improve the detection accuracy of aphids in dense 
+distribution regions. Our method focuses more on the pre-processing of the data. 
+We don't need to localize each aphid, we only check if they exist, and thus the Coarse-to-fine 
+approach won't improve our results.
+
+\newpage
+\section*{Paper summaries}
+
+\subsection*{You Only Look Once: Unified, Real-Time Object Detection \cite{YOLO}}
+YOLO, which stands for "You Only Look Once," is a convolutional neural network (CNN) used for object detection.
+It is different from traditional detection systems because it is trained end-to-end to directly
+optimize for the task of detecting objects.
+The model reframes object detection as a single regression problem,
+straight from image pixels to bounding box coordinates and class probabilities.
+This allows the network to learn a rich set of relevant features for the task at hand,
+and it can also handle variations in object appearance and pose.
+
+YOLO is also much faster and more efficient than traditional detection systems.
+It runs at 45 frames per second on a Titan X GPU, and it can make predictions on entire
+images in a single forward pass. This is in contrast to traditional systems, which use a
+sliding window approach and evaluate the classifier at each location and scale in the image,
+which is slow and inefficient. On the other hand, YOLO still lags behind state-of-the-art detection
+systems in accuracy. While it can quickly identify objects in images, it struggles to precisely
+localize some objects, especially small ones.
+
+\subsubsection*{Relevance}
+While YOLO is very good at general object detection, it does not fit our use case.
+We care about accuracy more than speed, as the aphids don't move around fast enough to require a 45FPS detection model.
+Additionally, YOLO struggles with identifying small objects precisely, which is exactly our use case.
+
+\subsection*{Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks \cite{FasterRCNN}}
+Recent advances in object detection have been driven by the success of region proposal methods
+and region-based convolutional neural networks (R-CNNs). While region-based CNNs are computationally expensive,
+their cost has been reduced through the sharing of convolutions across proposals. The latest incarnation, Fast R-CNN,
+achieves near real-time rates using very deep networks. However,
+proposals are currently the computational bottleneck in state-of-the-art detection systems.
+Region proposal methods typically rely on low-level features and economical inference schemes,
+such as Selective Search (SS). SS is slower than efficient detection networks and EdgeBoxes currently
+provides the best tradeoff between proposal quality and speed. In this paper,
+the authors propose Region Proposal Networks (RPNs) that share convolutional layers with
+state-of-the-art object detection networks. This allows for proposal computation at nearly no cost,
+with the marginal cost being only 10ms per image. RPNs are trained end-to-end for the task of generating
+detection proposals and the authors propose a simple training scheme that alternates between fine-tuning for
+the region proposal task and then fine-tuning for object detection, while keeping the proposals fixed. T
+he method is evaluated on the PASCAL VOC detection benchmarks and produces detection accuracy better
+than the strong baseline of SS with Fast R-CNNs. It also waives nearly all
+computational burdens of SS at test-time and has a frame rate of 5fps on a GPU.
+
+\subsubsection*{Relevance}
+This paper is relevants because it presents the faster rcnn method which we are planning to use.
+
+
+\subsection*{Automatic Segmentation and Counting of Aphid Nymphs on Leaves Using Convolutional Neural Networks \cite{AutoSegmentation}}
+
+In this paper, the authors propose a method for segmenting and counting aphid nymphs on leaves using convolutional
+neural networks (CNNs). The proposed method uses a modified U-Net architecture for segmentation,
+and it achieves significant performance improvements compared to existing methods that use hand-crafted features.
+The proposed method is also effective with limited training data, using only 68 images for training.
+The paper also explores the influence of network capacity on the performance of the proposed method,
+and the results indicate that there is an optimal network capacity that balances performance and computational efficiency.
+Additionally, the authors found that the proposed method was effective even in cases of complex lighting
+conditions and leaf lesions, but further research is needed to address false positives caused by lighting in in-field tests.
+Overall, the proposed method is a promising approach for automatic pest counting in agricultural applications.
+
+\subsubsection*{Relevance}
+This paper is less relevant because it is focused on counting the aphids and the authors are using for
+the model only images that contains aphids.
+
+
+\subsection*{Detection of aphids in wheat fields using a computer vision technique \cite{DetectionInWeatFields}}
+
+Liu et al. (2015) discusses the significance of pest control in agriculture and reviews the
+current techniques for integrated pest management (manual identification and image processing algorithms)
+and their drawbacks. It also reviews some of the current methods for aphid detection, such as unsupervised
+cluster algorithms, image segmentation, support vector machines, and histogram of gradients.
+
+
+The main contribution of the paper is the development and combination of several existing classification methods
+for the task by detecting maximally stable external regions (MSER) based on the support vector machine and
+histogram of oriented gradient (HOG) methods. MSER is used to detect features in images under varying lighting
+conditions and angles, while HOG involves gray scaling, normalization, gradient calculation,
+and pixel group division and consolidation.
+
+\subsubsection*{Relevance}
+Our proposed research will have some similarities to the paper. The similarities are the use of similar domain
+knowledge and some of the ideas presented in the paper,
+particularly for the preprocessing phase. At the preprocessing phase we will use feature detection, MSER detection,
+gray scaling and normalization, like described in the paper. After the preprocessing phase,
+we will use the preprocessed output as input in the Faster RCNN algorithm. However,
+our research will differ from the paper in the algorithms used for aphid detection.
+
+
+\subsection*{A coarse-to-fine network for aphid recognition and detection in the field \cite{CoarseToFine}}
+
+Rui et al. describe how aphids are a significant pest problem in wheat, rape, and corn crops.
+The authors describe previous research on pest recognition and detection using various techniques,
+including infrared sensors and machine vision, local feature methods, and bio-inspired techniques.
+The authors discuss recent advances in deep learning techniques based on convolutional neural networks (CNNs)
+and their potential for improving pest recognition and detection in the field. The paper mentions many techniques
+for image detection, including YOLO, SSD, FPN, and Faster-RCNN.
+
+The novel method in the paper is an architecture that relays on the distribution of aphids in an image.
+The authors note densely distributed aphids may be harder to detect than well-separated aphids.
+The method suggests localizing the regions of aphid cliques containing a large number of aphids and
+then refining them into single objects. This method is called Coarse-to-Fine Network (CFN)
+and can improve the detection accuracy of aphids in dense distribution regions.
+
+\subsubsection*{Relevance}
+This method is relevant to our work because of the similar domain and data.
+Though we chose to focus on feature extraction and pre-processing to achieve better results,
+in this paper, the focus was taking advantage of the physical properties of the aphids split the
+problem into two smaller ones.
+
+
+\subsection*{TD-Det: A Tiny Size Dense Aphid Detection Network under In-Field Environment \cite{TDDET}}
+
+This article shows a new method to detect Tiny size aphids. Most of the models before didn't focus on the
+size of the aphid. For that reason, models missed some of the aphids or took more time to run the model.
+To solve those problems, they created the model TD-Det using two central cores (1) Transformer feature pyramid network
+(T-FPN) and (2) multi-resolution training method (MTM). In this article, the critical task is to
+find the number of pests over the precise location. CNN-based pest detection methods only consider the features
+but ignore the clustering and interactions of problems. Unlike them, T-FPN focus on global
+information in the field of NLP. This inspired them. They design T-FPN to improve aphid detection
+performance with a feature-view Transformer module and a channel-wise recalibration module.
+Aphid's image is mainly taken at the micro-focal length, resulting in multi-viewpoint objects with the same idea.
+This causes two problems (1) one detected bounding box contains multiple aphids, and (2) a large number of undetected
+fuzzy aphids. Therefore, they design an MTM to improve detection performance with higher efficiency.
+The MTM uses a coarse-to-fine resolution setting to train the network by augmenting low-resolution aphid data
+by resizing high-resolution images. Their method achieves an average recall of 46.1\% and an average precision of 74.2\%
+and obtains 0.045 seconds per image testing time, which outperforms other state-of-the-art methods.
+
+\subsubsection*{Relevance}
+The relevance to the project is both our method and there are for detecting aphids.
+They use different methods with transformers to solve the problem.
+The primary purpose here is to improve the detection of tiny objects and counting them in our project we want to
+label their aphids in the data. Because of the focus on counting the aphids,
+it can miss other aspects like the boundary box of the aphids.
+
+
+\subsection*{Pest-YOLO: Deep Image Mining and Multi-Feature Fusion for Real-Time Agriculture Pest Detection \cite{PestYOLO}}
+Pest-YOLO is a new method for real-time agriculture pest detection. The article's primary purpose is to achieve a
+good balance between efficiency and accuracy for pest detection.
+Pest-YOLO is a new method based on and improved two algorithms CNN and YOLOv4.
+The dataset includes 28K images of 24 classes. Pest-YOLO achieves good performance with 71.6\% mPA and
+83.5\% Recall, which outperforms other state-of-the-art methods. Pest-YOLO basic idea is to reduce
+unnecessary model parameters and introduce a practical module with little computational cost to
+achieve better accuracy while maintaining the run time. Pest-YOLO consists of a backbone, neck and head.
+\begin{itemize}
+    \item Backbone: ResNet-50-D, i.e., the feature extraction network.
+    \item Neck: PAN with CSFF, i.e., the multi-scale feature fusion network.
+    \item Head: YOLOv3 detect layers, i.e., the dense prediction.
+\end{itemize}
+Compared with the state-of-the-art detection methods in terms of accuracy and speed, 
+Pest-YOLO performs the best in detecting agriculture pests based on the Pest24 dataset.
+
+
+\subsection*{Towards densely clustered tiny pest detection in the wild environment \cite{DenseTinyPest}}
+
+The paper presents a new problem, called densely clustered tiny (DCT) object detection, which is the detection of 
+small objects that are densely distributed in small areas.
+The authors argue that existing methods for clustered small object detection are not suitable for this task. 
+To address this problem, the authors propose a new approach called DCTDet, which consists of three core components:
+\begin{itemize}
+    \item a Cluster Region Proposal Network (ClusRPN)
+    \item  a Density Merging and Partition module (DMP)
+    \item a Local Detector Group (LDG)
+\end{itemize}
+To evaluate their approach, the authors build a specific in-field aphid dataset named APHID-4K 
+for the DCT detection task. They also present a Composited Cluster data Generation approach (CCG) 
+to generate additional data for training.
+The authors conduct experiments to evaluate the performance of their approach and 
+show that it outperforms existing methods for clustered small object detection on the APHID-4K dataset.
+
+
+\subsubsection*{Relevance}
+Pest-YOLO is an improving method of YOLO for pest detection,
+the relevance for the research is aphids are pests, and maybe we can take some of their ideas to reduce
+unnecessary parameters from the model to improve them to our problem. The difference in the model is the target
+we want to classify if we detect aphids or not. On the other hand, they classified 24 different pests.
+
+
+\subsection*{A multi-branch convolutional neural network with density map for aphid counting \cite{MultiBranchCNN}}
+
+Multi-branch convolutional neural network (Mb-CNN) is a new method to count aphids in that showed article. 
+Aphids cause damage and lower agriculture yields in wheat, rape and corn. In the past, 
+they used special equipment to count the pests. Their problem was that the equipment was fixed and could only 
+detect specific pests in a small region. To tackle this issue, Yao el al(2014) have developed a 
+handheld device for quickly capturing planthopper images on rice stems and proposed an automatic method for 
+counting rice planthoppers based on image processing. Mb-CNN purpose was to give better results in counting 
+aphids, and it was developed with a density map for aphids in densely distributed regions and overlapped areas. 
+The main idea of this method is to use a multi-branch CNN framework to generate the 
+density map of aphids to estimate their number.
+
+\subsubsection*{Relevance}
+The relevance of that method to our research is detecting aphids the sole purpose 
+of the article is to improve the number counting. It's less relevant to our research 
+because we want to detect and not count them. There are better methods than CNN for that.
+
+
+\subsection*{HRDNet: High-resolution Detection Network for Small Objects \cite{HRDNet}}
+
+This article shows a new method to detect Tiny size aphids. 
+Most of the models before didn't focus on the size of the aphid. For that reason, 
+models missed some of the aphids or took more time to run the model. To solve those problems, 
+they created the model TD-Det using two central cores (1) Transformer feature pyramid network 
+(T-FPN) and (2) multi-resolution training method (MTM). In this article, the critical task is to find the 
+number of pests over the precise location. CNN-based pest detection methods only consider the 
+features but ignore the clustering and interactions of problems. Unlike them, T-FPN focus on global 
+information in the field of NLP. This inspired them. They design T-FPN to improve aphid detection 
+performance with a feature-view Transformer module and a channel-wise recalibration module. 
+Aphid's image is mainly taken at the micro-focal length, resulting in multi-viewpoint objects with the same idea. 
+This causes two problems (1) one detected bounding box contains multiple aphids, and (2) a large number of 
+undetected fuzzy aphids. Therefore, they design an MTM to improve detection performance with higher efficiency. 
+The MTM uses a coarse-to-fine resolution setting to train the network by augmenting low-resolution 
+aphid data by resizing high-resolution images. Their method achieves an average recall of 46.1\% and an average 
+precision of 74.2\% and obtains 0.045 seconds per image testing time, which outperforms other 
+state-of-the-art methods.
+
+\subsubsection*{Relevance}
+The relevance to the project is both our method and there are for detecting aphids. 
+They use different methods with transformers to solve the problem. The primary purpose here 
+is to improve the detection of tiny objects and counting them in our project we want to label their 
+aphids in the data. Because of the focus on counting the aphids, it can miss other aspects like 
+the boundary box of the aphids.
+
+
+\subsection*{Augmentation for small object detection \cite{AugSmallObject}}
+Liu et al. (2020) proposed High-Resolution Detection Network (HRDNet), 
+which takes multiple resolution inputs using multi-depth backbones. To fully exploit the multiple features, 
+they introduced the Multi-Depth Image Pyramid Network (MD-IPN) and Multi-Scale Feature Pyramid Network (MS-FPN) 
+in HRDNet. MD-IPN maintains multiple position information using multiple depth backbones. 
+High-resolution input is fed into a shallow network to retain more positional information and reduce computational 
+cost, while low-resolution input is fed into a deep network to extract more semantic information. 
+By extracting various features from high to low resolutions, MD-IPN is able to improve the 
+performance of small object detection while maintaining the performance for middle and large objects. 
+MS-FPN is proposed to align and merge the multi-scale feature groups generated by MD-IPN to reduce the 
+information imbalance between these multi-scale, multi-level features.
+
+\subsubsection*{Relevance}
+This paper is somewhat related to our research. 
+It also focuses on detecting small objects in high-resolution images among mid to large objects, 
+unlike Faster RCNN, which takes low-resolution images as input. Since we are only concerned with 
+small objects (aphids), we may consider using the MD-IPN component, which is designed to improve the 
+detection of small objects by extracting various features from high to low resolutions of the input images. 
+This would be a good fit for our use case.
+
+
+\subsection*{Research on insect pest image detection and recognition based on bio-inspired methods \cite{BioBasedClassical}}
+In this paper, the authors propose a new approach for pest detection and recognition 
+that is based on modeling the human visual system and that is intended to be robust to complex outdoor environments. 
+Saliency Using Natural statistics (SUN) model was used to detect the pest and extract regions of interest (ROIs), 
+then Scale Invariant Feature Transform (SIFT) and the Non-negative Sparse Coding (NNSC) 
+were integrated into the bio-inspired Hierarchical Model and X (HMAX) model to improve invariance to rotation. Additionally, the Local Configuration Pattern (LCP) algorithm was used to extract invariant features. 
+The features extracted using these methods were then fed into an SVM for recognition. 
+
+\subsubsection*{Relevance}
+This paper has similar data to our own, and some of the feature extraction methods 
+could be relevant to use. But the focus here was feature engineering, 
+which is not required to this extent when using deep learning models and could even hurt their performance, 
+and we chose to focus on deep learning methods for our research.
+
+\newpage
 \bibliographystyle{abbrv}
 \bibliography{references.bib}
 

@@ -1,0 +1,119 @@
+\documentclass{article}
+
+
+\usepackage{../arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{enumerate}      % pretty enumeration
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{svg}
+\usepackage{microtype}      % microtypography
+\usepackage{graphicx}
+\usepackage{subfiles}
+
+\title{Aphid Detection in Lettuce and Cannabis Leaves \\ Experiment Plan}
+
+\subfile{../authors}
+
+\begin{document}
+\maketitle
+
+\section{Offline Experiment}
+In our experiments we try to answer the question “Can Data Augmentations Improve Faster-RCNN Performance In Aphid Identification on Plants?”
+We compare an existing Faster-RCNN model with our own model, which will use the augmentation described in our method.
+Our experiment will be done on the Lettuce and Cannabis Photos data sets, which contain photos of lettuce and cannabis leaves with and without aphids on them, 
+annotated with their class (aphids or no aphids) and bounding boxes for the aphids.
+Our experiment will combine the photos from both datasets and use them as the same data. 
+We will take all those photos and divide them into training and testing sets. We will divide each data set individually into 80\% 
+training and 20\% testing and then combine the training and testing sets.
+
+
+Our model is a binary classifier, we will use precision, recall, and accuracy, to evaluate the model. We will compare the models using a precision-recall curve,
+showing a more in-depth image of the performance due to the imbalance of the negative class (no aphid) compared to the positive class.
+To show that our model significantly improves on the current state of the art we will use Student’s t-test. 
+In the case of our experiment, the null hypothesis would be that there is no difference between the performance of the object 
+detection model as is and the performance of the model after applying augmentation on the data and fine-tuning the original model. 
+The alternative hypothesis would be that there is a significant difference in performance between the two versions of the model.
+
+
+To conduct the t-test, we would need to gather data on the performance of the two versions of the model. This will involve running the 
+models on a set of test data and measuring performance metrics, such as precision, recall, and accuracy 
+(as described in section d). Then we would calculate the means of the performance metrics for each version of the 
+model and use the t-test to determine whether there is a statistically significant difference between the means.
+If the t-test shows a significant difference between the means of the two groups, it would suggest that applying 
+augmentation and fine-tuning the model has positively impacted that performance. If the t-test does not show a 
+significant difference, it would suggest that the augmentation and fine-tuning have not had a significant effect on performance.
+Identifying a number of specific cases in which one system is better than another.
+The only way to determine which model is preferable in a given situation is to compare their performance on specific images.
+On a specific image, as looking at it, we will see if there is a difference in detecting the objects. Those cases where there will be a difference will be presented.
+
+
+Finally we will perform a sensitivity analysis to evaluate how sensitive our model is to changes in the input variables. In our sensitivity analysis, 
+we will focus on the effect of contrast on the model’s performance (metrics as described in section d).
+In the case of image contrast levels, a sensitivity analysis would involve evaluating how the performance of 
+the model changes as the contrast levels of the images used to train the model are varied.
+To conduct a sensitivity analysis of image contrast levels, we would start by selecting a range of contrast levels to test. 
+This will include both low and high contrast levels, as well as a range of intermediate levels. 
+Then, we would apply these contrast levels to the images used to train the model, and evaluate the performance of the model on a set of test data after each contrast level is applied.
+By comparing the performance of the model at different contrast levels, we can determine how sensitive the model is to changes in contrast level, 
+and identify any range of contrast levels that may be particularly beneficial or detrimental to model performance.
+
+\newpage
+\section{User Study}
+
+\subsection{User Study Question}
+Which model is detecting closer to human eyes when there is a disagreement between the models? 
+
+\subsection{Preliminary Questionnaire}
+The preliminary questionnaire will contain the following demographic questions: 
+
+\begin{enumerate}
+    \item Age
+    \item Gender
+    \item Education
+    \item Specialization
+    \item Former knowledge and Seniority in the field of biology or agriculture
+\end{enumerate}
+
+\subsection{Tasks}
+After delivering the preliminary questionnaires, our participants will be asked to complete the following tasks:
+
+\begin{enumerate}
+    \item Participants will be presented with 12 pre-selected images where the models conflict with the labels. Each Participant will be asked to 
+    choose which model to label the images correctly as either "aphids" or "not aphids" each choice will associate with one model.
+    \item The participant will be asked to justify his/her choice
+    \item Participants will be asked to rate the difficulty of the task on a scale of 1 (very easy) to 5 (very difficult).
+\end{enumerate}
+
+\subsection{Summary Questionnaire}
+The summary questionnaire will contain the following questions: 
+
+\begin{enumerate}
+    \item In your opinion, did you find this task hard to agree with one of the models?
+    \item What challenges did you face while choosing which model labeled the images correctly?
+    \item Do you have any suggestions for improving the study?
+\end{enumerate}
+
+\subsection{Instructions}
+\begin{enumerate}
+    \item Participants will be presented with an image and asked to choose which model
+    labels the images correctly as either "aphids" or "not aphids" each choice will associate with one model.
+    \item Participants should use their best judgment and be reassured if unsure of the correct label.
+    \item If participants are still determining the correct label, they should identify any key features that may help dish aphids from other insects.
+\end{enumerate}
+
+\subsection{Training Phase}
+\begin{enumerate}
+    \item Before starting the main task, participants will be presented with 3-5 images labeled by an expert.
+    \item Participants will be asked to label the images based on the expert's labels.
+    \item If participants make any mistakes, they will be given feedback on the correct label and asked to try again.
+\end{enumerate}
+
+
+
+\end{document}
