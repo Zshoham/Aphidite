@@ -194,9 +194,16 @@ We took all those photos and divide them into training and testing sets. The dat
     \label{fig:dataset}
 \end{figure}
 
-Our model is a binary classifier, we will use precision, recall, and accuracy, to evaluate the model, we compare the models using a precision-recall curve \ref{pr_curve},
+Our model is a binary classifier, we will use precision, recall, and accuracy, to evaluate the model, we compare the models using a precision-recall curve \ref{fig:pr_curve},
 showing a more in-depth image of the performance due to the imbalance of the negative class (no aphid) compared to the positive class.
 From the plot we can clearly see that our model outperforms the Faster-RCNN model.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/pr_curve.png}
+    \caption{Precision recall curve comparing our method and Faster-RCNN.}
+    \label{fig:pr_curve}
+\end{figure}
 
 % To show that our model significantly improves on the current state of the art we performed Student’s t-test. 
 % In the case of our experiment, the null hypothesis is that there is no difference between the performance of the models 
@@ -220,14 +227,14 @@ Finally we performed a sensitivity analysis to evaluate how sensitive our model 
 we focued on the effect of contrast on the model’s performance.
 We varied the contrast factor from \(0.25\) to \(5\) with jumps of \(0.25\).
 For each step in our sensitivity analysis we trained the model using the augmented images and then evaluated the model
-on the testing data, we can see the results in \ref*{fig:sensitivity}.
+on the testing data, we can see the results in \ref{fig:sensitivity}.
 As we can see in the plot, contrast factors lower than \(1\), seem to have a detremenal effect on our model, which makes
 sense as that would make the aphids blend in more with the leaves.
 We can also see that once we reach a factor of \(1\) (original contrast) the gain in accuracy is deminished, and the 
 model is relatively stable. We peak around a contrast factor of \(2\), and after that the increased contrast does not seem
 to improve results, even making them worse for factors greater than \(4\).
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{images/sensitivity.png}
     \caption{Sensitivity analysis on contrast levels.}
