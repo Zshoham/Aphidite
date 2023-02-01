@@ -160,7 +160,9 @@ approach won't improve our results.
 \section{Empiracal Evaluation}
 In our experiments we try to answer the question “Can Data Augmentations Improve Faster-RCNN Performance In Aphid Identification on Plants?”
 We performed both offline experiments, training deep learning models and comparing thier metrics
-, and a user study to further evaluate our method with input from a study group. 
+, and a user study to further evaluate our method with input from a study group.
+Our hypothesis is that a model that is trained on images with higher contrast will perform better,
+because the aphids will be more easily separable.
 
 \subsection{Offline Experiment}
 We compare an existing Faster-RCNN model with our own model, which uses the augmentation described in our method (contrast adjustment).
@@ -194,36 +196,36 @@ We took all those photos and divide them into training and testing sets. The dat
 
 Our model is a binary classifier, we will use precision, recall, and accuracy, to evaluate the model, we compare the models using a precision-recall curve \ref{pr_curve},
 showing a more in-depth image of the performance due to the imbalance of the negative class (no aphid) compared to the positive class.
-To show that our model significantly improves on the current state of the art we performed Student’s t-test. 
-In the case of our experiment, the null hypothesis is that there is no difference between the performance of the models 
-detection model as is and the performance of the model after applying augmentation on the data and fine-tuning the original model. 
-The alternative hypothesis is that there is a significant difference in performance between the two versions of the model.
-We the result in table \ref{t_test_table}
+From the plot we can clearly see that our model outperforms the Faster-RCNN model.
 
-To conduct the t-test, we would need to gather data on the performance of the two versions of the model. This will involve running the 
-models on a set of test data and measuring performance metrics, such as precision, recall, and accuracy 
-(as described in section d). Then we would calculate the means of the performance metrics for each version of the 
-model and use the t-test to determine whether there is a statistically significant difference between the means.
-If the t-test shows a significant difference between the means of the two groups, it would suggest that applying 
-augmentation and fine-tuning the model has positively impacted that performance. If the t-test does not show a 
-significant difference, it would suggest that the augmentation and fine-tuning have not had a significant effect on performance.
-Identifying a number of specific cases in which one system is better than another.
-The only way to determine which model is preferable in a given situation is to compare their performance on specific images.
-On a specific image, as looking at it, we will see if there is a difference in detecting the objects. Those cases where there will be a difference will be presented.
+% To show that our model significantly improves on the current state of the art we performed Student’s t-test. 
+% In the case of our experiment, the null hypothesis is that there is no difference between the performance of the models 
+% detection model as is and the performance of the model after applying augmentation on the data and fine-tuning the original model. 
+% The alternative hypothesis is that there is a significant difference in performance between the two versions of the model.
+% We the result in table \ref{t_test_table}
+
+% To conduct the t-test, we would need to gather data on the performance of the two versions of the model. This will involve running the 
+% models on a set of test data and measuring performance metrics, such as precision, recall, and accuracy 
+% (as described in section d). Then we would calculate the means of the performance metrics for each version of the 
+% model and use the t-test to determine whether there is a statistically significant difference between the means.
+% If the t-test shows a significant difference between the means of the two groups, it would suggest that applying 
+% augmentation and fine-tuning the model has positively impacted that performance. If the t-test does not show a 
+% significant difference, it would suggest that the augmentation and fine-tuning have not had a significant effect on performance.
+% Identifying a number of specific cases in which one system is better than another.
+% The only way to determine which model is preferable in a given situation is to compare their performance on specific images.
+% On a specific image, as looking at it, we will see if there is a difference in detecting the objects. Those cases where there will be a difference will be presented.
 
 
 Finally we performed a sensitivity analysis to evaluate how sensitive our model is to changes in the input variables. In our sensitivity analysis, 
 we focued on the effect of contrast on the model’s performance.
 We varied the contrast factor from \(0.25\) to \(5\) with jumps of \(0.25\).
 For each step in our sensitivity analysis we trained the model using the augmented images and then evaluated the model
-on the testing data, we can see the results in \ref*{fig:sensitivity}
-In the case of image contrast levels, the sensitivity analysis involved evaluating how the performance of 
-the model changed as the contrast levels of the images used to train the model are varied.
-To conduct a sensitivity analysis of image contrast levels, we would start by selecting a range of contrast levels to test. 
-This will include both low and high contrast levels, as well as a range of intermediate levels. 
-Then, we would apply these contrast levels to the images used to train the model, and evaluate the performance of the model on a set of test data after each contrast level is applied.
-By comparing the performance of the model at different contrast levels, we can determine how sensitive the model is to changes in contrast level, 
-and identify any range of contrast levels that may be particularly beneficial or detrimental to model performance.
+on the testing data, we can see the results in \ref*{fig:sensitivity}.
+As we can see in the plot, contrast factors lower than \(1\), seem to have a detremenal effect on our model, which makes
+sense as that would make the aphids blend in more with the leaves.
+We can also see that once we reach a factor of \(1\) (original contrast) the gain in accuracy is deminished, and the 
+model is relatively stable. We peak around a contrast factor of \(2\), and after that the increased contrast does not seem
+to improve results, even making them worse for factors greater than \(4\).
 
 \begin{figure}[h]
     \centering
@@ -235,7 +237,8 @@ and identify any range of contrast levels that may be particularly beneficial or
 \subsubsection{Results}
 We managed to show that our method can outperform current state of the art object detectioni methods,
 in a robust way, that is statistically segnificant, as is insensitive to small changes in the input.
-We were able to identify the aphids with 94\% accuracy on our data set compared to 92\% with the FasterRCNN model.
+We were able to identify the aphids with 91\% accuracy on our data set compared to 88\% with the FasterRCNN model.
+In the sensitivity analysis we also showed that contrast factors in the range \(1-2.5\) can improve the models performance.
 
 \newpage
 \subsection{User Study}
